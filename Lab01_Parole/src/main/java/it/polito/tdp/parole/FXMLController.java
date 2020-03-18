@@ -24,6 +24,9 @@ public class FXMLController {
     private TextField txtParola;
 
     @FXML
+    private TextField txtTime;
+    
+    @FXML
     private Button btnInserisci;
 
     @FXML
@@ -31,15 +34,47 @@ public class FXMLController {
 
     @FXML
     private Button btnReset;
+    
+    @FXML 
+    private Button btnDelete;
 
+    @FXML
+    void doDelete(ActionEvent event) {
+    	long startTime = System.nanoTime();
+    	String word = txtResult.getSelectedText();
+    	elenco.remove(word);
+    	display(startTime);
+    	
+    }
+    
+    void display(long startTime) {
+    	String res = "";
+    	for (String s : elenco.getElenco()) {
+    		res += s + "\n";
+    	}
+    	txtResult.clear();
+    	txtTime.clear();
+    	txtResult.appendText(res);
+    	long diff = System.nanoTime() - startTime;
+    	txtTime.appendText( String.valueOf(diff));
+    }
     @FXML
     void doInsert(ActionEvent event) {
     	// TODO
+    	long startTime = System.nanoTime();
+    	elenco.addParola(txtParola.getText());
+    	display(startTime);
     }
 
     @FXML
     void doReset(ActionEvent event) {
     	// TODO
+    	long startTime = System.nanoTime();
+    	elenco.reset();
+    	txtResult.clear();
+    	txtTime.clear();
+    	long diff = System.nanoTime() - startTime;
+    	txtTime.appendText( String.valueOf(diff));
     }
 
     @FXML
